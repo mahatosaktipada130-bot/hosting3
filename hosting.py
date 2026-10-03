@@ -32,7 +32,7 @@ def keep_alive():
     t.start()
 
 # ==================== CONFIG ====================
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "0")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8504233980:AAFYMJ3tXA2kuKYQ7neXvwt64WXRMx4w_0g")
 OWNER_NAME = "👑  Rᴜsʜᴇʀ Kɪɴɢ  👑"
 
 HOST_DIR = "hosted_files"
@@ -503,7 +503,7 @@ def callback_handler(call):
     elif data == "admin_panel":
         show_admin_panel(chat_id, msg_id)
     elif data == "admin_change_limits":
-        m = bot.send_message(chat_id, "✏️️ Enter new bot limits:\nFormat: <code>Free, Prime</code>\nExample: <code>3, 10</code>", parse_mode="HTML")
+        m = bot.send_message(chat_id, "✏ Enter new bot limits:\nFormat: <code>Free, Prime</code>\nExample: <code>3, 10</code>", parse_mode="HTML")
         bot.register_next_step_handler(m, process_admin_set_limits)
     elif data == "admin_set_brand":
         m = bot.send_message(chat_id, "✏️ Send new <b>Brand Name</b>:", parse_mode="HTML")
@@ -692,4 +692,8 @@ if __name__ == '__main__':
     keep_alive()  # Start Flask server for 24/7 uptime
     print(f"👑 {OWNER_NAME}")
     print(f"⚡ Free Hosting v5.2 with Flask and Admin Panel running!")
-    bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=10)
+    
+    try:
+        bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=10)
+    except Exception as e:
+        print(f"Polling error: {e}")
