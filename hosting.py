@@ -477,7 +477,7 @@ def _show_my_bots(chat_id, user_id, msg_id=None):
         label = f"{icon} {b['filename']}"
         markup.add(ibtn(label[:40], callback_data=f"manage_{b['id']}", style="primary", icon="bot"))
     markup.add(ibtn("Main Menu", callback_data="main_menu", style="danger", icon="top"))
-    send_or_edit(chat_id, "⚙️ *Your Bots:*", markup, msg_id)
+    send_or_edit(chat_id, "⚙️️ *Your Bots:*", markup, msg_id)
 
 # ==================== CALLBACKS ====================
 @bot.callback_query_handler(func=lambda call: True)
@@ -672,7 +672,7 @@ def clear_logs_action(chat_id, bot_id, msg_id):
 def delete_bot_action(chat_id, bot_id, msg_id, user_id=None):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM hosted_`, (bot_id,))
+    cursor.execute("SELECT * FROM hosted_bots WHERE id = ?", (bot_id,))
     b = cursor.fetchone()
     if b and (not user_id or b['user_id'] == user_id):
         if b['pid']: safe_kill(b['pid'])
