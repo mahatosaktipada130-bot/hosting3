@@ -25,7 +25,7 @@ def home():
     return "Bot is alive and running 24/7!"
 
 def run_web():
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080, use_reloader=False)
 
 def keep_alive():
     t = threading.Thread(target=run_web, daemon=True)
@@ -672,7 +672,7 @@ def clear_logs_action(chat_id, bot_id, msg_id):
 def delete_bot_action(chat_id, bot_id, msg_id, user_id=None):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM hosted_bots WHERE id = ?", (bot_id,))
+    cursor.execute("SELECT * FROM hosted_`, (bot_id,))
     b = cursor.fetchone()
     if b and (not user_id or b['user_id'] == user_id):
         if b['pid']: safe_kill(b['pid'])
@@ -693,7 +693,12 @@ if __name__ == '__main__':
     print(f"👑 {OWNER_NAME}")
     print(f"⚡ Free Hosting v5.2 with Flask and Admin Panel running!")
     
-    try:
-        bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=10)
-    except Exception as e:
-        print(f"Polling error: {e}")
+    # Wait a bit for Flask to bind the port fully before polling starts
+    time.sleep(3)
+    
+    while True:
+        try:
+            bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=10)
+        except Exception as e:
+            print(f"Polling error: {e}")
+            time.sleep(5)
